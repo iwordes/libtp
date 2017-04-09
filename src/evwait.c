@@ -6,13 +6,13 @@
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/09 15:31:26 by iwordes           #+#    #+#             */
-/*   Updated: 2017/04/09 15:46:54 by iwordes          ###   ########.fr       */
+/*   Updated: 2017/04/09 15:59:57 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libpt_.h>
 
-void	tp_ewait(t_event *ev, t_mutex *lock)
+void	tp_evwait(t_event *ev, t_mutex *lock)
 {
 	pthread_cond_wait(ev, lock);
 }
