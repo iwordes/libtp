@@ -6,7 +6,7 @@
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 20:09:45 by iwordes           #+#    #+#             */
-/*   Updated: 2017/04/09 19:58:13 by iwordes          ###   ########.fr       */
+/*   Updated: 2017/04/09 20:14:02 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ t_tp	*tpanic_(t_tp *tp, unsigned n)
 #define MFAIL(M) if ((M) == NULL) return (mpanic_(tp))
 #define QFAIL(Q, F) if (Q) return (qpanic_(tp, F))
 
+#define INITFN void *(*)(void*)
+
 t_tp	*tp_create(unsigned nth)
 {
 	t_tp		*tp;
@@ -67,7 +69,7 @@ t_tp	*tp_create(unsigned nth)
 	tp->nth = nth;
 	while (i < nth)
 	{
-		if (pthread_create(tp->th + i, NULL, tp__work_loop, tp))
+		if (pthread_create(tp->th + i, NULL, (INITFN)tp__work_loop, tp))
 			return (tpanic_(tp, i));
 		i += 1;
 	}
