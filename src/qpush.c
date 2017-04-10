@@ -6,15 +6,15 @@
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 20:19:18 by iwordes           #+#    #+#             */
-/*   Updated: 2017/04/09 19:38:27 by iwordes          ###   ########.fr       */
+/*   Updated: 2017/04/09 20:10:55 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libpt_.h>
+#include <libtp_.h>
 
-t_job	*last_(void)
+t_tp_job	*last_(t_tp *tp)
 {
-	t_job	*last;
+	t_tp_job	*last;
 
 	last = JOB.q;
 	if (last)
@@ -28,21 +28,21 @@ t_job	*last_(void)
 ** Will fail if allocation for the new job fails.
 */
 
-bool	tp_qpush(t_tp *tp, void *job, void *arg)
+bool	tp_qpush(t_tp *tp, void *job, void *ctx)
 {
-	t_job	*last;
+	t_tp_job	*last;
 
 	tp_lock(&JOB.lock);
-	last = last_();
+	last = last_(tp);
 	if (last == NULL)
 	{
-		if ((JOB.q = MALT(t_job, 1)) == NULL)
+		if ((JOB.q = MALT(t_tp_job, 1)) == NULL)
 			return (false);
 		last = JOB.q;
 	}
 	else
 	{
-		if ((last->next = MALT(t_job, 1)) == NULL)
+		if ((last->next = MALT(t_tp_job, 1)) == NULL)
 			return (false);
 		last = last->next;
 	}
