@@ -6,9 +6,11 @@
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/09 08:52:11 by iwordes           #+#    #+#             */
-/*   Updated: 2017/04/09 09:23:39 by iwordes          ###   ########.fr       */
+/*   Updated: 2017/04/09 20:06:05 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <libtp_.h>
 
 int		tp_get_nbr_proc(void)
 {
