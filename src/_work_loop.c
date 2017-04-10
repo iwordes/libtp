@@ -6,7 +6,7 @@
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/09 09:47:10 by iwordes           #+#    #+#             */
-/*   Updated: 2017/04/09 16:00:35 by iwordes          ###   ########.fr       */
+/*   Updated: 2017/04/09 17:43:31 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	done_(void)
 	tp_unlock(JOB.lock);
 }
 
-void	tp__work_loop(void *ctx)
+void	*tp__work_loop(void *ctx)
 {
 	t_job	*job;
 
@@ -32,5 +32,5 @@ void	tp__work_loop(void *ctx)
 		free(job);
 		done_();
 	}
-	(void)ctx;
+	return (ctx);
 }
