@@ -6,7 +6,7 @@
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 20:19:18 by iwordes           #+#    #+#             */
-/*   Updated: 2017/04/09 16:34:57 by iwordes          ###   ########.fr       */
+/*   Updated: 2017/04/09 19:38:27 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ t_job	*last_(void)
 ** Will fail if allocation for the new job fails.
 */
 
-bool	tp_qpush(void *job, void *arg)
+bool	tp_qpush(t_tp *tp, void *job, void *arg)
 {
 	t_job	*last;
 
-	tp_lock(JOB.lock);
+	tp_lock(&JOB.lock);
 	last = last_();
 	if (last == NULL)
 	{
@@ -49,7 +49,7 @@ bool	tp_qpush(void *job, void *arg)
 	JOB.cnt += 1;
 	last->fn = job;
 	last->ctx = ctx;
-	tp_evfire(JOB.ev_new);
-	tp_unlock(JOB.lock);
+	tp_evfire(&JOB.ev_new);
+	tp_unlock(&JOB.lock);
 	return (true);
 }
