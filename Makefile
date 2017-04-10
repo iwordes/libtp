@@ -4,7 +4,7 @@ CC   := gcc
 CF   += -Wall -Wextra -Werror
 CF   += -I include
 
-SRC  := _kill_thread.c _work_loop.c _zalloc.c
+SRC  := kill_thread.c work_loop.c zalloc.c
 SRC  += create.c exec_queue_add.c wait_for_queue.c
 SRC  += get_nbr_proc.c
 SRC  += evfire.c evwait.c lock.c unlock.c ncpu.c
