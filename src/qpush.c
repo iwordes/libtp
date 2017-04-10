@@ -6,7 +6,7 @@
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 20:19:18 by iwordes           #+#    #+#             */
-/*   Updated: 2017/04/09 20:10:55 by iwordes          ###   ########.fr       */
+/*   Updated: 2017/04/09 20:15:37 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_tp_job	*last_(t_tp *tp)
 ** Will fail if allocation for the new job fails.
 */
 
-bool	tp_qpush(t_tp *tp, void *job, void *ctx)
+bool		tp_qpush(t_tp *tp, void *job, void *ctx)
 {
 	t_tp_job	*last;
 
