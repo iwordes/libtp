@@ -6,7 +6,7 @@
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/09 09:47:10 by iwordes           #+#    #+#             */
-/*   Updated: 2017/04/09 19:39:45 by iwordes          ###   ########.fr       */
+/*   Updated: 2017/04/09 19:52:24 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	done_(t_tp *tp)
 
 void	*tp__work_loop(t_tp *tp)
 {
-	t_job	*job;
+	t_tp_job	*job;
 
 	while (1)
 	{
@@ -32,5 +32,5 @@ void	*tp__work_loop(t_tp *tp)
 		free(job);
 		done_(tp);
 	}
-	return (ctx);
+	return (tp);
 }
