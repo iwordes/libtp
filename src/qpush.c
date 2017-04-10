@@ -6,7 +6,7 @@
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 20:19:18 by iwordes           #+#    #+#             */
-/*   Updated: 2017/04/09 20:15:37 by iwordes          ###   ########.fr       */
+/*   Updated: 2017/04/10 09:27:04 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ bool		tp_qpush(t_tp *tp, void *job, void *ctx)
 	last = last_(tp);
 	if (last == NULL)
 	{
-		if ((JOB.q = MALT(t_tp_job, 1)) == NULL)
+		if ((JOB.q = ZALT(t_tp_job, 1)) == NULL)
 			return (false);
 		last = JOB.q;
 	}
 	else
 	{
-		if ((last->next = MALT(t_tp_job, 1)) == NULL)
+		if ((last->next = ZALT(t_tp_job, 1)) == NULL)
 			return (false);
 		last = last->next;
 	}
