@@ -6,7 +6,7 @@
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 20:09:45 by iwordes           #+#    #+#             */
-/*   Updated: 2017/04/09 19:17:46 by iwordes          ###   ########.fr       */
+/*   Updated: 2017/04/09 19:58:13 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 t_tp	*mpanic_(t_tp *tp)
 {
-	if (tp && tp.th)
-		free(tp.th);
+	if (tp && tp->th)
+		free(tp->th);
 	if (tp)
 		free(tp);
 	return (NULL);
@@ -34,7 +34,7 @@ t_tp	*qpanic_(t_tp *tp, int flag)
 
 t_tp	*tpanic_(t_tp *tp, unsigned n)
 {
-	t_job		ex;
+	t_tp_job	ex;
 	unsigned	i;
 
 	i = 0;
@@ -55,18 +55,19 @@ t_tp	*tpanic_(t_tp *tp, unsigned n)
 
 t_tp	*tp_create(unsigned nth)
 {
+	t_tp		*tp;
 	unsigned	i;
 
 	MFAIL(tp = ZALT(t_tp, 1));
-	MFAIL(tp.th = ZALT(pthread_t, nth));
-	QFAIL(pthread_mutex_init(&JOB.lock), 0);
-	QFAIL(pthread_cond_init(&JOB.ev_new), 1);
-	QFAIL(pthread_cond_init(&JOB.ev_done), 3);
+	MFAIL(tp->th = ZALT(pthread_t, nth));
+	QFAIL(pthread_mutex_init(&JOB.lock, NULL), 0);
+	QFAIL(pthread_cond_init(&JOB.ev_new, NULL), 1);
+	QFAIL(pthread_cond_init(&JOB.ev_done, NULL), 3);
 	i = 0;
-	tp.nth = nth;
+	tp->nth = nth;
 	while (i < nth)
 	{
-		if (pthread_create(th->id + i, NULL, tp__work_loop, tp))
+		if (pthread_create(tp->th + i, NULL, tp__work_loop, tp))
 			return (tpanic_(tp, i));
 		i += 1;
 	}
