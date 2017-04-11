@@ -6,7 +6,7 @@
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 20:20:20 by iwordes           #+#    #+#             */
-/*   Updated: 2017/04/11 10:45:15 by iwordes          ###   ########.fr       */
+/*   Updated: 2017/04/11 10:47:00 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 /*
 ** TODO: Wait for specific tasks
 ** (create a per-job condition)
+**
+** Would return a t_tp_evt* for the job in question.
+** void	*tp_qpush(t_tp *tp, void *job, void *ctx);
+**
+** ...
 **
 ** tp_qwait(tp, job*, ..., NULL)
 **
