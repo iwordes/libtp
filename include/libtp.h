@@ -6,7 +6,7 @@
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 20:01:19 by iwordes           #+#    #+#             */
-/*   Updated: 2017/04/09 20:10:16 by iwordes          ###   ########.fr       */
+/*   Updated: 2017/04/11 10:41:03 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@ typedef struct	s_tp
 	t_tp_jobq	job;
 }				t_tp;
 
+t_tp			*tp_create(unsigned nth);
+void			tp_destroy(t_tp *tp);
+
 bool			tp_qpush(t_tp *tp, void *job, void *context);
 void			tp_qwait(t_tp *tp);
 
@@ -60,25 +63,17 @@ void			tp_evfire(t_tp_evt *ev);
 void			tp_evwait(t_tp_evt *ev, t_tp_mut *lock);
 
 bool			tp_lock(t_tp_mut *lock);
-/*
-** bool			tp_locked(void *res);
-*/
+bool			tp_locked(t_tp_mut *lock);
 void			tp_unlock(t_tp_mut *lock);
 
 int				tp_ncpu(void);
 
 /*
-** Mandatory
+** (Mandatory)
 */
 
-t_tp			*tp_create(unsigned nth);
 void			tp_exec_queue_add(t_tp *tp, void *job, void *context);
 void			tp_wait_for_queue(t_tp *tp);
-
-/*
-** Optional
-*/
-
 int				tp_get_nbr_proc(void);
 
 #endif
