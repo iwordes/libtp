@@ -6,7 +6,7 @@
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 20:09:45 by iwordes           #+#    #+#             */
-/*   Updated: 2017/04/12 12:43:05 by iwordes          ###   ########.fr       */
+/*   Updated: 2017/04/12 14:07:48 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,8 @@ t_tp	*tpanic_(t_tp *tp, unsigned n)
 	ex.fn = tp__kill_thread;
 	while (i < n)
 	{
-		tp_lock(&WORQ.lock);
-		WORQ.q = &ex;
-		tp_evfire(&WORQ.ev_new);
-		tp_unlock(&WORQ.lock);
+		tp_qpush(tp, tp__kill_thread, NULL);
+		i += 1;
 	}
 	return (qpanic_(tp, 7));
 }
@@ -64,13 +62,13 @@ t_tp	*tp_create(unsigned nth, unsigned qlen)
 
 	MFAIL(tp = ZALT(t_tp, 1));
 	MFAIL(tp->th = ZALT(pthread_t, nth));
-	MFAIL(tp->job.q = MALT(t_tp_job, qlen + 1));
+	MFAIL(tp->job.q = MALT(t_tp_job, qlen));
 	QFAIL(pthread_mutex_init(&WORQ.lock, NULL), 0);
 	QFAIL(pthread_cond_init(&WORQ.ev_new, NULL), 1);
 	QFAIL(pthread_cond_init(&WORQ.ev_done, NULL), 3);
 	i = 0;
 	tp->nth = nth;
-	tp->job.max = qlen + 1;
+	tp->job.max = qlen;
 	while (i < nth)
 	{
 		if (pthread_create(tp->th + i, NULL, (INITFN)tp__work_loop, tp))
