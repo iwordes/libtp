@@ -6,7 +6,7 @@
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 20:09:45 by iwordes           #+#    #+#             */
-/*   Updated: 2017/04/09 20:14:02 by iwordes          ###   ########.fr       */
+/*   Updated: 2017/04/12 12:43:05 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 t_tp	*mpanic_(t_tp *tp)
 {
+	if (tp && tp->job.q)
+		free(tp->job.q);
 	if (tp && tp->th)
 		free(tp->th);
 	if (tp)
@@ -24,11 +26,11 @@ t_tp	*mpanic_(t_tp *tp)
 t_tp	*qpanic_(t_tp *tp, int flag)
 {
 	if (flag & 1)
-		pthread_mutex_destroy(&JOB.lock);
+		pthread_mutex_destroy(&WORQ.lock);
 	if (flag & 2)
-		pthread_cond_destroy(&JOB.ev_new);
+		pthread_cond_destroy(&WORQ.ev_new);
 	if (flag & 4)
-		pthread_cond_destroy(&JOB.ev_done);
+		pthread_cond_destroy(&WORQ.ev_done);
 	return (mpanic_(tp));
 }
 
@@ -42,10 +44,10 @@ t_tp	*tpanic_(t_tp *tp, unsigned n)
 	ex.fn = tp__kill_thread;
 	while (i < n)
 	{
-		tp_lock(&JOB.lock);
-		JOB.q = &ex;
-		tp_evfire(&JOB.ev_new);
-		tp_unlock(&JOB.lock);
+		tp_lock(&WORQ.lock);
+		WORQ.q = &ex;
+		tp_evfire(&WORQ.ev_new);
+		tp_unlock(&WORQ.lock);
 	}
 	return (qpanic_(tp, 7));
 }
@@ -55,18 +57,20 @@ t_tp	*tpanic_(t_tp *tp, unsigned n)
 
 #define INITFN void *(*)(void*)
 
-t_tp	*tp_create(unsigned nth)
+t_tp	*tp_create(unsigned nth, unsigned qlen)
 {
 	t_tp		*tp;
 	unsigned	i;
 
 	MFAIL(tp = ZALT(t_tp, 1));
 	MFAIL(tp->th = ZALT(pthread_t, nth));
-	QFAIL(pthread_mutex_init(&JOB.lock, NULL), 0);
-	QFAIL(pthread_cond_init(&JOB.ev_new, NULL), 1);
-	QFAIL(pthread_cond_init(&JOB.ev_done, NULL), 3);
+	MFAIL(tp->job.q = MALT(t_tp_job, qlen + 1));
+	QFAIL(pthread_mutex_init(&WORQ.lock, NULL), 0);
+	QFAIL(pthread_cond_init(&WORQ.ev_new, NULL), 1);
+	QFAIL(pthread_cond_init(&WORQ.ev_done, NULL), 3);
 	i = 0;
 	tp->nth = nth;
+	tp->job.max = qlen + 1;
 	while (i < nth)
 	{
 		if (pthread_create(tp->th + i, NULL, (INITFN)tp__work_loop, tp))

@@ -6,50 +6,26 @@
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 20:19:18 by iwordes           #+#    #+#             */
-/*   Updated: 2017/04/10 09:27:04 by iwordes          ###   ########.fr       */
+/*   Updated: 2017/04/12 12:38:12 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libtp_.h>
 
-t_tp_job	*last_(t_tp *tp)
+bool	tp_qpush(t_tp *tp, void *job, void *ctx)
 {
-	t_tp_job	*last;
-
-	last = JOB.q;
-	if (last)
-		while (last->next)
-			last = last->next;
-	return (last);
-}
-
-/*
-** Add a job to the job queue.
-** Will fail if allocation for the new job fails.
-*/
-
-bool		tp_qpush(t_tp *tp, void *job, void *ctx)
-{
-	t_tp_job	*last;
-
-	tp_lock(&JOB.lock);
-	last = last_(tp);
-	if (last == NULL)
+	tp_lock(&WORQ.lock);
+	if (WORQ.len == WORQ.max)
 	{
-		if ((JOB.q = ZALT(t_tp_job, 1)) == NULL)
-			return (false);
-		last = JOB.q;
+		tp_unlock(&WORQ.lock);
+		return (false);
 	}
-	else
-	{
-		if ((last->next = ZALT(t_tp_job, 1)) == NULL)
-			return (false);
-		last = last->next;
-	}
-	JOB.cnt += 1;
-	last->fn = job;
-	last->ctx = ctx;
-	tp_evfire(&JOB.ev_new);
-	tp_unlock(&JOB.lock);
+	WORQ.len += 1;
+	WORQ.undone += 1;
+	WORQ.q[WORQ.b].fn = job;
+	WORQ.q[WORQ.b].ctx = ctx;
+	WORQ.b = (WORQ.b + 1) % WORQ.max;
+	tp_evfire(&WORQ.ev_new);
+	tp_unlock(&WORQ.lock);
 	return (true);
 }

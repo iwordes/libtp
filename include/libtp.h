@@ -6,7 +6,7 @@
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 20:01:19 by iwordes           #+#    #+#             */
-/*   Updated: 2017/04/11 10:41:03 by iwordes          ###   ########.fr       */
+/*   Updated: 2017/04/12 12:43:25 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,27 +33,32 @@ typedef struct	s_tp_job
 {
 	void		(*fn)(void*);
 	void		*ctx;
-	S_TP_JOB	*next;
 }				t_tp_job;
 
-typedef struct	s_tp_jobq
+typedef struct	s_tp_worq
 {
 	t_tp_job	*q;
-	t_tp_mut	lock;
-	unsigned	cnt;
 
+	unsigned	b;
+	unsigned	f;
+	unsigned	len;
+	unsigned	max;
+
+	unsigned	undone;
+
+	t_tp_mut	lock;
 	t_tp_evt	ev_new;
 	t_tp_evt	ev_done;
-}				t_tp_jobq;
+}				t_tp_worq;
 
 typedef struct	s_tp
 {
 	pthread_t	*th;
 	unsigned	nth;
-	t_tp_jobq	job;
+	t_tp_worq	job;
 }				t_tp;
 
-t_tp			*tp_create(unsigned nth);
+t_tp			*tp_create(unsigned n_thread, unsigned queue_len);
 void			tp_destroy(t_tp *tp);
 
 bool			tp_qpush(t_tp *tp, void *job, void *context);

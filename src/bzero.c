@@ -1,35 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy.c                                          :+:      :+:    :+:   */
+/*   bzero.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/11 10:34:53 by iwordes           #+#    #+#             */
-/*   Updated: 2017/04/12 12:44:05 by iwordes          ###   ########.fr       */
+/*   Created: 2017/04/12 11:56:56 by iwordes           #+#    #+#             */
+/*   Updated: 2017/04/12 11:59:10 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libtp_.h>
 
-void	tp_destroy(t_tp *tp)
+void	tp__bzero(void *mem_, size_t n)
 {
-	t_tp_job	ex;
-	unsigned	i;
+	char	*mem;
+	size_t	i;
 
 	i = 0;
-	ex.ctx = NULL;
-	ex.fn = tp__kill_thread;
-	while (i < tp->nth)
+	mem = mem_;
+	while (n - i >= 8)
 	{
-		tp_lock(&WORQ.lock);
-		WORQ.q = &ex;
-		tp_evfire(&WORQ.ev_new);
-		tp_unlock(&WORQ.lock);
+		*((long*)(mem + i)) = 0;
+		i += 8;
 	}
-	pthread_mutex_destroy(&WORQ.lock);
-	pthread_cond_destroy(&WORQ.ev_new);
-	pthread_cond_destroy(&WORQ.ev_done);
-	free(tp->th);
-	free(tp);
+	while (i < n)
+		mem[i++] = 0;
 }
