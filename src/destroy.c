@@ -6,7 +6,7 @@
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 10:34:53 by iwordes           #+#    #+#             */
-/*   Updated: 2017/04/12 14:06:02 by iwordes          ###   ########.fr       */
+/*   Updated: 2017/04/12 14:10:55 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	tp_destroy(t_tp *tp)
 	ex.fn = tp__kill_thread;
 	while (i < tp->nth)
 	{
-		tp_qpush(tp__kill_thread, NULL);
+		tp_qpush(tp, tp__kill_thread, NULL);
 		i += 1;
 	}
 	pthread_mutex_destroy(&WORQ.lock);
