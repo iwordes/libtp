@@ -6,7 +6,7 @@ CF   += -I include
 
 HEAD := $(addprefix include/,libtp.h libtp_.h)
 
-SRC  := kill_thread.c work_loop.c zalloc.c
+SRC  := bzero.c kill_thread.c work_loop.c zalloc.c
 SRC  += create.c exec_queue_add.c wait_for_queue.c
 SRC  += get_nbr_proc.c
 SRC  += destroy.c evfire.c evwait.c lock.c locked.c unlock.c ncpu.c
