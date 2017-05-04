@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_queue_add.c                                   :+:      :+:    :+:   */
+/*   wlock.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/09 08:56:15 by iwordes           #+#    #+#             */
-/*   Updated: 2017/04/09 20:05:33 by iwordes          ###   ########.fr       */
+/*   Created: 2017/05/03 20:23:00 by iwordes           #+#    #+#             */
+/*   Updated: 2017/05/03 20:36:59 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libtp.h>
 
-void	tp_exec_queue_add(t_tp *tp, void *job, void *context)
+bool	tp_wlock(t_tp_rwl *lock)
 {
-	tp_qpush(tp, job, context);
+	return (pthread_rwlock_wrlock(lock) == 0);
 }

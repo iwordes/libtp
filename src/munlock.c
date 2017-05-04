@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lock.c                                             :+:      :+:    :+:   */
+/*   munlock.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/08 18:30:00 by iwordes           #+#    #+#             */
-/*   Updated: 2017/04/09 20:07:52 by iwordes          ###   ########.fr       */
+/*   Created: 2017/04/08 18:28:11 by iwordes           #+#    #+#             */
+/*   Updated: 2017/05/03 20:22:50 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libtp_.h>
 
-bool	tp_lock(t_tp_mut *lock)
+void	tp_munlock(t_tp_mut *lock)
 {
-	return (pthread_mutex_lock(lock) == 0);
+	pthread_mutex_unlock(lock);
 }

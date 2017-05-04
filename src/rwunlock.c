@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_nbr_proc.c                                     :+:      :+:    :+:   */
+/*   rwunlock.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/09 08:52:11 by iwordes           #+#    #+#             */
-/*   Updated: 2017/04/09 20:06:05 by iwordes          ###   ########.fr       */
+/*   Created: 2017/05/03 20:23:39 by iwordes           #+#    #+#             */
+/*   Updated: 2017/05/03 20:37:03 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libtp_.h>
+#include <libtp.h>
 
-int		tp_get_nbr_proc(void)
+void	tp_rwunlock(t_tp_rwl *lock)
 {
-	return (tp_ncpu());
+	pthread_rwlock_unlock(lock);
 }

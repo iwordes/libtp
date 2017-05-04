@@ -6,7 +6,7 @@
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 20:01:19 by iwordes           #+#    #+#             */
-/*   Updated: 2017/04/12 12:43:25 by iwordes          ###   ########.fr       */
+/*   Updated: 2017/05/03 20:36:27 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,17 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define TP_ON_EXEC 0
-# define TP_ON_START 1
+/*
+** pthread typedefs and wrapper functions provided for convenience.
+*/
 
-# define T_TP_MU pthread_mutex_t
 # define T_TP_EV pthread_cond_t
+# define T_TP_MU pthread_mutex_t
+# define T_TP_RW pthread_rwlock_t
 
-typedef T_TP_MU	t_tp_mut;
 typedef T_TP_EV	t_tp_evt;
+typedef T_TP_MU	t_tp_mut;
+typedef T_TP_RW	t_tp_rwl;
 
 # define S_TP_JOB struct s_tp_job
 
@@ -67,11 +70,15 @@ void			tp_qwait(t_tp *tp);
 void			tp_evfire(t_tp_evt *ev);
 void			tp_evwait(t_tp_evt *ev, t_tp_mut *lock);
 
-bool			tp_lock(t_tp_mut *lock);
-bool			tp_locked(t_tp_mut *lock);
-void			tp_unlock(t_tp_mut *lock);
+bool			tp_mlock(t_tp_mut *lock);
+void			tp_mlocked(t_tp_mut *lock);
+void			tp_munlock(t_tp_mut *lock);
 
-int				tp_ncpu(void);
+bool			tp_rlock(t_tp_rwl *lock);
+bool			tp_wlock(t_tp_rwl *lock);
+void			tp_rwunlock(t_tp_rwl *lock);
+
+int				tp_ncore(void);
 
 /*
 ** (Mandatory)

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wait_for_queue.c                                   :+:      :+:    :+:   */
+/*   lock.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/09 08:55:37 by iwordes           #+#    #+#             */
-/*   Updated: 2017/04/09 20:05:26 by iwordes          ###   ########.fr       */
+/*   Created: 2017/04/08 18:30:00 by iwordes           #+#    #+#             */
+/*   Updated: 2017/05/03 20:22:33 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libtp.h>
+#include <libtp_.h>
 
-void	tp_wait_for_queue(t_tp *tp)
+bool	tp_mlock(t_tp_mut *lock)
 {
-	tp_qwait(tp);
+	return (pthread_mutex_lock(lock) == 0);
 }
