@@ -6,11 +6,15 @@
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 20:19:18 by iwordes           #+#    #+#             */
-/*   Updated: 2017/04/12 12:38:12 by iwordes          ###   ########.fr       */
+/*   Updated: 2017/06/22 11:18:49 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libtp_.h>
+
+/*
+** Safely add a new job to a pool's work queue.
+*/
 
 bool	tp_qpush(t_tp *tp, void *job, void *ctx)
 {

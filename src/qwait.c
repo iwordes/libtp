@@ -6,11 +6,15 @@
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 20:20:20 by iwordes           #+#    #+#             */
-/*   Updated: 2017/05/03 20:30:13 by iwordes          ###   ########.fr       */
+/*   Updated: 2017/06/22 11:19:09 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libtp_.h>
+
+/*
+** Wait for all jobs queued for a pool are completed.
+*/
 
 void	tp_qwait(t_tp *tp)
 {

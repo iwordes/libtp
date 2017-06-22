@@ -6,7 +6,7 @@
 /*   By: iwordes <iwordes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 20:09:45 by iwordes           #+#    #+#             */
-/*   Updated: 2017/05/03 20:31:40 by iwordes          ###   ########.fr       */
+/*   Updated: 2017/06/22 11:17:27 by iwordes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,14 @@ t_tp	*tpanic_(t_tp *tp, unsigned n)
 #define QFAIL(Q, F) if (Q) return (qpanic_(tp, F))
 
 #define INITFN void *(*)(void*)
+
+/*
+** 1. Allocate a new thread pool or die trying.
+** 2. Allocate space in that thread pool for thread IDs.
+** 3. Allocate space in that thread pool for the work queue.
+** 4. Create the associated work lock and signals or die trying.
+** 5. Create the associated threads or die trying.
+*/
 
 t_tp	*tp_create(unsigned nth, unsigned qlen)
 {
